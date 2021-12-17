@@ -10,5 +10,6 @@ const sequelize = new Sequelize(
     dialect: 'mysql'
     }
 );
+console.log(sequelize);
 
 module.exports = sequelize;

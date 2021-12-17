@@ -1,14 +1,54 @@
 //const MethodOfTransport = require('../models').transportMethod;
 
+const { User } = require("../model");
+
 const login = async(req,res) => {
     try {
-        console.log("something");
-        res.status(200).json({message: "hello"})
+        await User.findAll().then(allUsers => {
+            allUsers.forEach(element => {
+                console.log(req.body.password);
+                console.log(element.password);
+                if (element.email == req.body.email) {
+                    if (element.password == req.body.password) {
+                        res.status(200).json({ success: true });
+                    }
+                    else {
+                        res.status(404).json({ success: false });
+                    }
+                }
+                else {
+                    res.status(404).json({ success: false });
+                }
+            });
+        });
     } catch (err) {
-        return res.status(404).send({message: "No data found"});
+        return res.status(500).send({message: "Server Error"});
+    }
+}
+
+const signup = async(req, res) => {
+    try {
+        await User.findAll().then(allUsers => {
+            allUsers.forEach(element => {
+                console.log(req.body.password);
+                console.log(element.password);
+                if (element.email == req.body.email) {
+                    res.status(400).json({ success: false });
+                }
+            });
+        });
+        let user = await User.create({
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password
+        });
+        res.status(201).send(user);
+    } catch (err) {
+        return res.status(500).send({message: "Server Error"});
     }
 }
 
 module.exports = {
-    login
+    login,
+    signup
 }

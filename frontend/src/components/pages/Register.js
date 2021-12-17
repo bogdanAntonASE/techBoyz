@@ -1,28 +1,32 @@
+import { WindowsBalloon } from 'node-notifier';
 import React from 'react';
 import '../../styles/Login.css';
 import axios from 'axios';
 
-class Login extends React.Component {
+class Register extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             email: "",
+            username: "",
             password: ""
         };
     }
 
-    handleSignIn(event) {
+    handleSignUp(event) {
         event.preventDefault();
-        axios.post('http://localhost:3001/api/login', {
+        axios.post('http://localhost:3001/api/signup', {
             email: this.state.email,
+            username: this.state.username,
             password: this.state.password
         },
         { headers: { 
             'Content-Type': 'application/json'
          }}
         ).then(res => {
-            if (res.data.success === true) {
+            if (res.data) {
+                console.log(res.data);
                 window.location.href = './home';
             }
         })
@@ -50,6 +54,20 @@ class Login extends React.Component {
                     </div>
 
                     <div className="form-group">
+                        <label>Username</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            placeholder="Enter username"
+                            onChange={e => {
+                                this.setState({
+                                    username: e.target.value.toString(),
+                                });
+                            }}
+                        />
+                    </div>
+
+                    <div className="form-group">
                         <label>Password</label>
                         <input
                             type="password"
@@ -63,47 +81,18 @@ class Login extends React.Component {
                         />
                     </div>
 
-                    <div className="form-group">
-                        <div className="custom-control custom-checkbox">
-                            <input
-                                type="checkbox"
-                                className="custom-control-input"
-                                id="customCheck1"
-                            />
-                            <label
-                                className="custom-control-label"
-                                htmlFor="customCheck1"
-                            >
-                                Remember me
-                            </label>
-                        </div>
-                    </div>
-
                     <button
                         type="submit"
                         className="btn btn-signin btn-dark btn-sm btn-block"
-                        onClick={e => this.handleSignIn(e)}
+                        onClick={e => this.handleSignUp(e)}
                     >
                         {' '}
-                        Login
+                        Register
                     </button><br/>
-                    <p className="forgot-password text-right">
-                        <a className="link-login" href="/recover">
-                            Forgot password?
-                        </a>
-                    </p>
                 </form>
-                <div className="register">
-                    <h4>
-                        Not a member?{' '}
-                        <a className="link-login" href="/register">
-                            Click here!
-                        </a>
-                    </h4>
-                </div>
         </section>
         );
     }
 }
 
-export default Login;
+export default Register;
