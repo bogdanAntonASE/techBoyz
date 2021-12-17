@@ -3,8 +3,8 @@
 Setup environment:
 
 Github steps ->
-    1. open GIT Bash
-    1. clone repository on your local machine using git clone https://https://github.com/bogdanAntonASE/techBoyz.git
+    1. open GIT Bash<br/>
+    2. clone repository on your local machine using git clone https://https://github.com/bogdanAntonASE/techBoyz.git
     2. cd techBoyz
     
 FrontEnd ->
