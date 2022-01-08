@@ -19,7 +19,8 @@ class Register extends React.Component {
         axios.post('http://localhost:3001/api/signup', {
             email: this.state.email,
             username: this.state.username,
-            password: this.state.password
+            password: this.state.password,
+            type: "REGULAR"
         },
         { headers: { 
             'Content-Type': 'application/json'

@@ -10,6 +10,14 @@ const users = [
     { username: 'user7', password: 'pass7', email: 'email7@gmail.com' }
 ];
 
+const bugs = [
+    { severity: "1", priority: "P3", description: "this is bad", commit: "https://www.github.com", project_id: 1, asignee: 'email1@gmail.com', reporter: 'email1@gmail.com'},
+    { severity: "1", priority: "P3", description: "this is bad", commit: "https://www.github.com", project_id: 1, asignee: 'email1@gmail.com', reporter: 'email1@gmail.com'},
+    { severity: "1", priority: "P3", description: "this is bad", commit: "https://www.github.com", project_id: 1, asignee: 'email1@gmail.com', reporter: 'email1@gmail.com'},
+    { severity: "1", priority: "P3", description: "this is bad", commit: "https://www.github.com", project_id: 1, asignee: 'email1@gmail.com', reporter: 'email1@gmail.com'}
+]
+
 (async () => {
     await model.User.bulkCreate(users);
+    await model.Bug.bulkCreate(bugs);
 })();

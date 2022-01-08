@@ -1,13 +1,9 @@
-//const MethodOfTransport = require('../models').transportMethod;
-
 const { User } = require("../model");
 
 const login = async(req,res) => {
     try {
         await User.findAll().then(allUsers => {
             allUsers.forEach(element => {
-                console.log(req.body.password);
-                console.log(element.password);
                 if (element.email == req.body.email) {
                     if (element.password == req.body.password) {
                         res.status(200).json({ success: true });
@@ -30,8 +26,6 @@ const signup = async(req, res) => {
     try {
         await User.findAll().then(allUsers => {
             allUsers.forEach(element => {
-                console.log(req.body.password);
-                console.log(element.password);
                 if (element.email == req.body.email) {
                     res.status(400).json({ success: false });
                 }
@@ -40,7 +34,8 @@ const signup = async(req, res) => {
         let user = await User.create({
             username: req.body.username,
             email: req.body.email,
-            password: req.body.password
+            password: req.body.password,
+            type: req.body.type
         });
         res.status(201).send(user);
     } catch (err) {

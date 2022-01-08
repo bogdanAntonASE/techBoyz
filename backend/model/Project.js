@@ -1,22 +1,18 @@
 module.exports = (sequelize, DataTypes) => {
-    return sequelize.define('user', {
-        'username': {
+    return sequelize.define('project', {
+        'name': {
             type: DataTypes.STRING,
             allowNull:false,
             required: true
         },
-        'password': {
+        'owner': {
+            type: DataTypes.STRING,
+            allowNull: false,
+            require: true
+        },
+        'url': {
             type: DataTypes.STRING,
             allowNull:false,
-            required: true
-        },
-        'email': {
-            type: DataTypes.STRING,
-            required: true,
-            unique: true
-        },
-        'type': {
-            type: DataTypes.ENUM('MP', 'TST', 'REGULAR'),
             required: true
         }
     }, {

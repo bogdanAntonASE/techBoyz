@@ -3,6 +3,7 @@ import { Container, Nav, Navbar } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import "../../styles/CustomNavBar.css";
 import logo from '../../styles/logo.jpg';
+import AuthService from '../../util/AuthService';
 
 class CustomNavBar extends React.Component {
 
@@ -11,14 +12,24 @@ class CustomNavBar extends React.Component {
         this.state = {
             isUserLoggedIn: false
         };
+        this.auth = new AuthService();
     }
 
     componentDidMount() {
-          
+        const logged = this.auth.userIsLogged();
+        this.setState({ isUserLoggedIn: logged });
+        console.log(logged);
     }
 
-    componentDidUpdate() {
-        console.log('component updated');
+    componentDidUpdate(prevProps, prevState) {
+        const logged = this.auth.userIsLogged();
+        if (prevState.isUserLoggedIn !== this.state.isUserLoggedIn) {
+            this.setState({ isUserLoggedIn: logged });
+        }
+    }
+
+    handleLogOut = () => {
+        this.auth.logout();
     }
     
     render() {
@@ -34,23 +45,32 @@ class CustomNavBar extends React.Component {
                             <Nav.Item>
                                 <Nav.Link href="/">Home</Nav.Link>
                             </Nav.Item>
-
-                            <Nav.Item>
-                                <Nav.Link href="/aboutus">About Us</Nav.Link>
-                            </Nav.Item>
                             
-                                {this.state.isUserLoggedIn === true ? (
+                            {this.state.isUserLoggedIn === true ? (
+                                <React.Fragment>
+                                    <Nav.Item>
+                                        <Nav.Link href="/projects">Projects</Nav.Link>
+                                    </Nav.Item>
                                     <Nav.Item>
                                         <Nav.Link href="/profile">Profile</Nav.Link>
                                     </Nav.Item>
-                                ) : 
-                                (
-                                    <>
-                                        <Nav.Item>
-                                            <Nav.Link href="/login">Sign in</Nav.Link>
-                                        </Nav.Item>
-                                    </>
-                                )}
+                                    <Nav.Item onClick={this.handleLogOut}>
+                                        <Nav.Link href="/home" >Log out</Nav.Link>
+                                    </Nav.Item>
+                                </React.Fragment>
+                                
+                            ) : 
+                            (
+                                <>
+                                    <Nav.Item>
+                                        <Nav.Link href="/login">Sign in</Nav.Link>
+                                    </Nav.Item>
+                                </>
+                            )}
+                            
+                            <Nav.Item>
+                                <Nav.Link href="/aboutus">About Us</Nav.Link>
+                            </Nav.Item>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

@@ -1,5 +1,7 @@
 import React from 'react';
 import '../../styles/Login.css';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
 class Login extends React.Component {
@@ -23,11 +25,30 @@ class Login extends React.Component {
          }}
         ).then(res => {
             if (res.data.success === true) {
+                let user = res.data;
+                localStorage.setItem('user', JSON.stringify(user));
+                toast.success("Login successful!", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined
+                });
                 window.location.href = './home';
             }
         })
         .catch(err => {
-            console.log(err);
+            toast.error("User not found!", {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined
+            });
         });
     }
 
