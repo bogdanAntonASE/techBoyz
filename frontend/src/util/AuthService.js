@@ -1,9 +1,10 @@
 export default class AuthService {
     userIsLogged() {
-        return localStorage.getItem('user') !== null;
+        console.log(localStorage);
+        return localStorage.getItem('mySession') !== null;
     }
 
     logout = () => {
-        localStorage.removeItem('user');
+        localStorage.removeItem('mySession');
     }
 }

@@ -26,7 +26,7 @@ class Login extends React.Component {
         ).then(res => {
             if (res.data.success === true) {
                 let user = res.data;
-                localStorage.setItem('user', JSON.stringify(user));
+                localStorage.setItem('mySession', JSON.stringify(user));
                 toast.success("Login successful!", {
                     position: "top-right",
                     autoClose: 5000,
@@ -40,7 +40,7 @@ class Login extends React.Component {
             }
         })
         .catch(err => {
-            toast.error("User not found!", {
+            toast.error("User not found! " + err.response.data.text, {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,

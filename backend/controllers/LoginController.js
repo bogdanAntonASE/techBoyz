@@ -6,14 +6,14 @@ const login = async(req,res) => {
             allUsers.forEach(element => {
                 if (element.email == req.body.email) {
                     if (element.password == req.body.password) {
-                        res.status(200).json({ success: true });
+                        return res.status(200).json({ success: true });
                     }
                     else {
-                        res.status(404).json({ success: false });
+                        return res.status(404).json({ success: false, text: "Incorrect password for " + req.body.email + "."});
                     }
                 }
                 else {
-                    res.status(404).json({ success: false });
+                    return res.status(404).json({ success: false, text: "Email is not present in database." });
                 }
             });
         });
@@ -26,8 +26,8 @@ const signup = async(req, res) => {
     try {
         await User.findAll().then(allUsers => {
             allUsers.forEach(element => {
-                if (element.email == req.body.email) {
-                    res.status(400).json({ success: false });
+                if (element.email === req.body.email) {
+                    return res.status(400).json({ success: false, text: "Email already existing in database." });
                 }
             });
         });
@@ -37,7 +37,7 @@ const signup = async(req, res) => {
             password: req.body.password,
             type: req.body.type
         });
-        res.status(201).send(user);
+        return res.status(201).send(user);
     } catch (err) {
         return res.status(500).send({message: "Server Error"});
     }

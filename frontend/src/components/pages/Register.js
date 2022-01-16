@@ -1,5 +1,6 @@
 import { WindowsBalloon } from 'node-notifier';
 import React from 'react';
+import { ToastContainer, toast } from 'react-toastify';
 import '../../styles/Login.css';
 import axios from 'axios';
 
@@ -32,7 +33,15 @@ class Register extends React.Component {
             }
         })
         .catch(err => {
-            console.log(err);
+            toast.error("Registration failed! " + err.response.data.text, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined
+            });
         });
     }
 

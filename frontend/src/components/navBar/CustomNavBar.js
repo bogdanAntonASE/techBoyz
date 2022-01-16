@@ -18,7 +18,6 @@ class CustomNavBar extends React.Component {
     componentDidMount() {
         const logged = this.auth.userIsLogged();
         this.setState({ isUserLoggedIn: logged });
-        console.log(logged);
     }
 
     componentDidUpdate(prevProps, prevState) {
