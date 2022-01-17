@@ -4,7 +4,7 @@
 
 ### Github steps (use GIT Bash) -><br/>
 ```
-    1. git clone https://https://github.com/bogdanAntonASE/techBoyz.git
+    1. git clone https://github.com/bogdanAntonASE/techBoyz.git
     2. cd techBoyz
 ```    
 ### FrontEnd -><br/>
