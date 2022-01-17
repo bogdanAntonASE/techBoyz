@@ -12,6 +12,6 @@ router.post('/projects', projectsController.postProject);
 router.delete('/projects/:id', projectsController.deleteProject);
 router.post('/projects/member', projectsController.checkMember);
 router.post('/projects/join', projectsController.joinProject);
-router.get('/bugs', bugsController.getBugs);
+router.post('/bugs', bugsController.getBugs);
 
 module.exports = router;

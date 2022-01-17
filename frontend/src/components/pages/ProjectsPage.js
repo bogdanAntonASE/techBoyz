@@ -269,9 +269,9 @@ class ProjectsPage extends React.Component {
                         <td colSpan={2} style={{'textAlign': 'center'}}><input type="button" className="btn btn-dark" onClick={this.addRow} value="Add Row"/></td>
                     </tr>
                     <tr className='pagination' key={9999}>
-                        <td style={{display: this.isFirstPage() ? "none" : "block"}} className='btn-dark' onClick={this.changePage}>Prev</td>
+                        <td style={{display: this.isFirstPage() ? "none" : "inline-block"}} className='btn-dark' onClick={this.changePage}>Prev</td>
                         {this.state.pages}
-                        <td style={{display: this.isLastPage() ? "none" : "block"}} className='btn-dark' onClick={this.changePage}>Next</td>
+                        <td style={{display: this.isLastPage() ? "none" : "inline-block"}} className='btn-dark' onClick={this.changePage}>Next</td>
                     </tr>
                 </tbody>
             </table>

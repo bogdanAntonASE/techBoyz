@@ -1,3 +1,66 @@
 .select-project {
-    padding-top: 100px
+    width: 50%;
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    font-size: 0.9em;
+    font-family: sans-serif;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    color: white;
+}
+
+.bugs-table {
+    border-collapse: collapse;
+    width: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    font-size: 0.9em;
+    font-family: sans-serif;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+    color: white;
+    text-align: left;
+    border-radius:6px;
+}
+
+.bugs-table  thead tr {
+    background-color: gold;
+    color: #ffffff;
+    text-align: left;
+}
+
+.bugs-table th,
+.bugs-table td {
+    padding: 12px 15px;
+}
+
+.bugs-table tbody tr {
+    border-bottom: 1px solid #dddddd;
+}
+
+.bugs-table tbody tr:last-of-type {
+    border-bottom: 2px solid gold;
+}
+
+.bugs-table tbody tr.active-row {
+    font-weight: bold;
+    color: gold;
+}
+
+input {
+    color: black;
+}
+
+.bugs-table thead {
+    float: right;
+    right: 100%;
+    width: 100%;
+}
+
+.pagination {
+    text-align: center;
 }
