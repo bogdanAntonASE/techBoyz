@@ -3,6 +3,7 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import ProjectsPage from '../pages/ProjectsPage';
 import Register from '../pages/Register';
+import BugsPage from '../pages/BugsPage';
 
 export default function CustomRoutes() {
     return (
@@ -13,6 +14,7 @@ export default function CustomRoutes() {
                 <Route path="/login" element={<Login/>}/>
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/projects" element={<ProjectsPage/>}/>
+                <Route path="/bugs" element={<BugsPage/>}/>
             </Routes>
         </Router>
     );

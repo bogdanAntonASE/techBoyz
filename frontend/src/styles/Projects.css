@@ -41,3 +41,12 @@
 input {
     color: black;
 }
+
+.projects-table tfoot {
+    float: right;
+    right: 100%;
+}
+
+.pagination {
+    text-align: center;
+}

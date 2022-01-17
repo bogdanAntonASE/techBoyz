@@ -7,7 +7,6 @@ const PORT = require('./config/config.sample.json').port;
 const routes = require('./routes');
 const cors = require('cors');
 const model = require('./model');
-const loginController = require('./controllers/LoginController');
 
 model.sequelize
     .authenticate()

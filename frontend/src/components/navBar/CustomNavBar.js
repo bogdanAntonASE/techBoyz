@@ -51,7 +51,7 @@ class CustomNavBar extends React.Component {
                                         <Nav.Link href="/projects">Projects</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item>
-                                        <Nav.Link href="/profile">Profile</Nav.Link>
+                                        <Nav.Link href="/bugs">Bugs</Nav.Link>
                                     </Nav.Item>
                                     <Nav.Item onClick={this.handleLogOut}>
                                         <Nav.Link href="/home" >Log out</Nav.Link>
