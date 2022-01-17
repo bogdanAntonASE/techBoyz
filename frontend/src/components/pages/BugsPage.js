@@ -72,15 +72,15 @@ class BugsPage extends React.Component {
                 totalNumberOfPages: res.data.length / 5,
                 currentPageNumber: 0,
                 pages: this.getPages(res.data),
-                currentProject: event.target.innerHTML
+                currentProject: event.target.innerHTML === undefined || event.target.innerHTML === '' ? this.state.currentProject : event.target.innerHTML
             });
+            console.log(event.target.innerHTML);
             document.getElementById("myThead").style.display = "table";
             document.getElementById("myTbody").style.display = "table";
 
         })
         .catch(err => {
-            console.log(err);
-            toast.error("Projects could not be retrieved! " + err.response.data.text, {
+            toast.error("Bugs could not be retrieved! " + err.response.data.text, {
                 position: "top-right",
                 autoClose: 5000,
                 hideProgressBar: false,
@@ -92,10 +92,50 @@ class BugsPage extends React.Component {
         });
     }
 
+    deleteRow = (event) => {
+        let id = parseInt(String(event.target.id).substring(3));
+        axios.delete('http://localhost:3001/api/bugs/' + id,
+        { headers: { 
+            'Content-Type': 'application/json'
+            }}
+        ).then(res => {
+            if (res.data.success === true) {
+                toast.success("Bug successfully deleted!", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined
+                });
+            }
+            let simmedEvent = { target: { id: res.data.projectId }};
+            console.log(simmedEvent);
+            this.renderTable(simmedEvent);
+            
+        })
+        .catch(err => {
+            toast.error("Bug could not be deleted! " + err.response.data.text, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined
+            });
+            return;
+        });
+
+        console.log(event);
+        this.renderTable(event);
+    }
+
     getPages = (data) => {
         let elements = [];
         for (let i = 0; i < data.length / 5; i ++) {
-            elements.push(<td className="btn btn-dark" onClick={this.changePage}>{i + 1}</td>);
+            elements.push(<td className="btn btn-dark" style={{display: 'initial'}} onClick={this.changePage}>{i + 1}</td>);
         }
         return elements;
     }
@@ -125,7 +165,71 @@ class BugsPage extends React.Component {
     }
 
     isLastPage = () => {
-        return this.state.currentPageNumber === Math.ceil(this.state.totalNumberOfPages) - 1 || this.state.currentPageNumber === undefined;
+        return  Math.ceil(this.state.totalNumberOfPages) == 0 || this.state.currentPageNumber === Math.ceil(this.state.totalNumberOfPages) - 1 || this.state.currentPageNumber === undefined;
+    }
+
+    addRow = () => {
+        let bugSeverity = document.getElementById("new_bug_severity").value;
+        let bugPriority = document.getElementById("new_bug_priority").value;
+        let bugDescription = document.getElementById("new_bug_description").value;
+        let lastCommit = document.getElementById("new_last_commit").value;
+        let projectId = document.getElementById("new_project_id").value;
+        let asignee = document.getElementById("new_asignee").value;
+        let reporter = document.getElementById("new_reporter").value;
+
+        let simmedEvent = { target: { id: projectId } };
+
+        if (bugSeverity === '' || bugPriority === '' || bugDescription === '' || projectId === '' || reporter === '') {
+            toast.error("All fields are mandatory!", {
+                        position: "top-right",
+                        autoClose: 5000,
+                        hideProgressBar: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        draggable: true,
+                        progress: undefined
+                    });
+        }
+
+        axios.post('http://localhost:3001/api/bugsInsert', {
+            severity: bugSeverity,
+            priority: bugPriority,
+            description: bugDescription,
+            commit: lastCommit,
+            project_id: projectId,
+            reporter: reporter,
+            asignee: asignee
+        },
+        { headers: { 
+            'Content-Type': 'application/json'
+            }}
+        ).then(res => {
+            if (res.data.success === true) {
+                toast.success("Bug successfully added!", {
+                    position: "top-right",
+                    autoClose: 5000,
+                    hideProgressBar: false,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined
+                });
+            }
+            
+            this.renderTable(simmedEvent);
+        })
+        .catch(err => {
+            toast.error("Project could not be added! " + err.response.data.text, {
+                position: "top-right",
+                autoClose: 5000,
+                hideProgressBar: false,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined
+            });
+            return;
+        });
     }
 
     render() {
@@ -157,19 +261,19 @@ class BugsPage extends React.Component {
                     {this.state.table.slice(this.state.currentPageNumber * 5, this.state.currentPageNumber * 5 + 5)}
                     <tr className='input_field' key={9998}>
                         <td></td>
-                        <td><input type="text" id="new_bug_severity"/></td>
-                        <td><input type="text" id="new_bug_priority"/></td>
-                        <td><input type="text" id="new_bug_description"/></td>
-                        <td><input type="text" id="new_last_commit"/></td>
-                        <td><input type="text" id="new_project_id"/></td>
-                        <td><input type="text" id="new_asignee"/></td>
-                        <td><input type="text" id="new_reporter"/></td>
+                        <td><input type="text" id="new_bug_severity" placeholder='Severity'/></td>
+                        <td><input type="text" id="new_bug_priority" placeholder='Priority'/></td>
+                        <td><input type="text" id="new_bug_description" placeholder='Description'/></td>
+                        <td><input type="text" id="new_last_commit" placeholder='Commit'/></td>
+                        <td><input type="text" id="new_project_id" placeholder='Project Id'/></td>
+                        <td><input type="text" id="new_asignee" placeholder='Asignee'/></td>
+                        <td><input type="text" id="new_reporter" placeholder='Reporter'/></td>
                         <td colSpan={2} style={{'textAlign': 'center'}}><input type="button" className="btn btn-dark" onClick={this.addRow} value="Add Row"/></td>
                     </tr>
                     <tr className='pagination' key={9999}>
-                        <td style={{display: this.isFirstPage() ? "none" : "table"}} className='btn-dark' onClick={this.changePage}>Prev</td>
+                        <td style={{display: this.isFirstPage() ? "none" : "initial"}} className='btn-dark' onClick={this.changePage}>Prev</td>
                         {this.state.pages}
-                        <td style={{display: this.isLastPage() ? "none" : "table"}} className='btn-dark' onClick={this.changePage}>Next</td>
+                        <td style={{display: this.isLastPage() ? "none" : "initial"}} className='btn-dark' onClick={this.changePage}>Next</td>
                     </tr>
                 </tbody>
             </table>

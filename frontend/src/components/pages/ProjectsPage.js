@@ -154,7 +154,7 @@ class ProjectsPage extends React.Component {
     }
 
     isLastPage = () => {
-        return this.state.currentPageNumber === Math.ceil(this.state.totalNumberOfPages) - 1 || this.state.currentPageNumber === undefined;
+        return Math.ceil(this.state.totalNumberOfPages) == 0 || this.state.currentPageNumber === Math.ceil(this.state.totalNumberOfPages) - 1 || this.state.currentPageNumber === undefined;
     }
 
     addRow = () => {
